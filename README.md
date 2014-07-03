@@ -1,4 +1,4 @@
-** Homework 8: Click-Tac-Toe **
+**Homework 8: Click-Tac-Toe**
 
 Write a single-page client-side application which adds a graphical interface to your Tic-Tac-Toe engine from homework #5.
 
