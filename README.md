@@ -18,7 +18,7 @@ The body of your application will be a single HTML file which embeds both module
 
 ---
 
-**a)** Begin with the enclosed file [tictactoe-prebuilt.html](tictactoe-prebuilt.html).  Use the HTML table elements within it as the structure of your interface, and write functions to modify the appearance of those elements.  Following the example of [tictactoe-gui-template.js](tictactoe-gui-template.js), write a gui module (an IIFE) which returns a single constructor `TicTacToeGui()` and use it to make a gui instance with the following methods:
+**a)** Begin with the enclosed file [tictactoe-prebuilt.html](tictactoe-prebuilt.html).  Use the HTML table elements within it as the structure of your interface, and write functions to modify the appearance of those elements.  Following the example of [tictactoe-gui.js](tictactoe-gui.js), write a gui module (an IIFE) which returns a single constructor `TicTacToeGui()` and use it to make a gui instance with the following methods:
 
 * `gui.clear()`: clear the board of all marks.
 * `gui.mark(xyObj,symbol)`: add a mark _symbol_ in the cell at position _xyObj_, which has the form `{x:0,y:0}`.

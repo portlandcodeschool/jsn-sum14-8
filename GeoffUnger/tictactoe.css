@@ -1,0 +1,10 @@
+td {
+  height: 100px;
+    min-width: 100px;
+    empty-cells: show;
+    border: 1px black solid;
+    font-family: arial, sans-serif;
+    font-weight: bold;
+    font-size: 90px;
+    text-align: center;
+}
