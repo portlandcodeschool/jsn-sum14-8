@@ -49,7 +49,7 @@ var TicTacToeGame = function() { //module returning constructor:
                     if (item.contents != ".") success = undefined;
                     else {
                         item.contents = team;
-                        gui.mark({x:x, y:y},team);
+                        gui && gui.mark({x:x, y:y},team);
                         gridScore[x] += score;
                         gridScore[size + y] += score;
                         if (x == y) gridScore[(size * 2)+1] += score;
@@ -70,7 +70,7 @@ var TicTacToeGame = function() { //module returning constructor:
             return place(x,y,"o", -1);
         }
         this.clear = function () {
-            gui.clear();
+            gui && gui.clear();
             cells.map(function (item) {
                 item.contents = ".";
             })
