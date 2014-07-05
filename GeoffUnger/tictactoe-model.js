@@ -3,6 +3,7 @@ var TicTacToeGame = function() { //module returning constructor:
 	// Revised HW5 solution here, including...
     function TicTacToeBoard(callBack, gui) {
         if(!callBack) callBack = function(msg){console.log(msg)};
+        var turn = "O";
         var size = 3;
         var cells = [];
         var numCells = (Math.pow(size,2));
@@ -54,9 +55,14 @@ var TicTacToeGame = function() { //module returning constructor:
                         gridScore[size + y] += score;
                         if (x == y) gridScore[(size * 2)+1] += score;
                         if ((2 - x) == y) gridScore[(size * 2)+2] += score;
-                        winner();
+
                         numberOfMoves++;
-                        if(numberOfMoves == numCells) callBack("The game was a draw!");
+                        if(numberOfMoves == numCells) {
+                            callBack("The game was a draw!");
+
+                            return;
+                        }
+                        winner();
                     }
                 }
 
@@ -69,7 +75,7 @@ var TicTacToeGame = function() { //module returning constructor:
         this.placeO = function (x, y) {
             return place(x,y,"o", -1);
         }
-        this.clear = function () {
+        var clear = function () {
             gui && gui.clear();
             cells.map(function (item) {
                 item.contents = ".";
@@ -78,7 +84,30 @@ var TicTacToeGame = function() { //module returning constructor:
                 gridScore[i] = 0;
             }
             numberOfMoves = 0;
+            turn = "O";
         }
+        this.clear = clear;
+
+        var whoseTurn = function(){
+            return turn;
+        }
+        this.whoseTurn = whoseTurn;
+
+        var takeTurn = function(x,y){
+
+            if(this.whoseTurn() === 'X'){
+                this.placeX(x,y);
+                turn = "O";
+                return;
+            }
+            if(this.whoseTurn() === 'O'){
+                this.placeO(x,y);
+                turn = "X";
+                return;
+            }
+        }
+
+        this.takeTurn = takeTurn;
 
         var winner = function () {
             var result = [];
