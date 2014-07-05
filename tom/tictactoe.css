@@ -1,0 +1,16 @@
+table {
+  empty-cells: show;
+  border-collapse: collapse;
+}
+td {
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  width: 25px;
+  height: 25px;
+}
+td.top {
+  border-top: none;
+}
+td.left {
+  border-left: none;
+}
