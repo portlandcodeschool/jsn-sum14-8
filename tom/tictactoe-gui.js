@@ -1,20 +1,20 @@
 var TicTacToeGui = function() { //module returning constructor:
 
   this.interpolateId = function(xyObj) {
-    var id = 'grid0' + xyObj.x + 'x' + xyObj.y + 'y';
+    var id = 'grid0x' + xyObj.x + 'y' + xyObj.y;
     return id;
   }
 
-  this.mark = function(xyObj, symbol) {
-    document.getElementById(interpolateId(xyObj)).innerText = symbol;
-  }
-
-  this.clear = function() {
-    //
-  }
-
   function Constructor() {
-    // more code...
+
+    this.mark = function(xyObj, symbol) {
+      document.getElementById(interpolateId(xyObj)).innerText = symbol;
+    }
+
+    this.clear = function() {
+      //
+    }
+
   }
 
   // more code...
