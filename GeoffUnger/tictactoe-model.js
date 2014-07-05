@@ -1,7 +1,7 @@
 var TicTacToeGame = function() { //module returning constructor:
 
 	// Revised HW5 solution here, including...
-    function TicTacToeBoard(callBack) {
+    function TicTacToeBoard(callBack, gui) {
         if(!callBack) callBack = function(msg){console.log(msg)};
         var size = 3;
         var cells = [];
@@ -49,6 +49,7 @@ var TicTacToeGame = function() { //module returning constructor:
                     if (item.contents != ".") success = undefined;
                     else {
                         item.contents = team;
+                        gui.mark({x:x, y:y},team);
                         gridScore[x] += score;
                         gridScore[size + y] += score;
                         if (x == y) gridScore[(size * 2)+1] += score;
@@ -69,6 +70,7 @@ var TicTacToeGame = function() { //module returning constructor:
             return place(x,y,"o", -1);
         }
         this.clear = function () {
+            gui.clear();
             cells.map(function (item) {
                 item.contents = ".";
             })
@@ -103,9 +105,10 @@ var TicTacToeGame = function() { //module returning constructor:
 
 
 
-    function Constructor(endgameFn, gui) {
+    //function Constructor(endgameFn, gui) {
 		// more code...
-	}
+	//}
 
-	return Constructor;	// return TTT game constructor
+	//return Constructor;	// return TTT game constructor
+    return TicTacToeBoard;
 }();
