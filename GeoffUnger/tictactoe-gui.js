@@ -1,6 +1,7 @@
 var TicTacToeGui = function() { //module returning constructor:
 
     var gameNumber = 0;
+    var callback = new Function();
 
 	function Constructor() {
 
@@ -35,6 +36,24 @@ var TicTacToeGui = function() { //module returning constructor:
             console.log('grid' + this.gameNumber + 'x' + xyObj.x + 'y' + xyObj.y);
             var box = document.getElementById('grid' + this.gameNumber + 'x' + xyObj.x + 'y' + xyObj.y);
             box.innerText = symbol;
+        }
+
+        this.setAction = function(callback){
+
+                for(var col = 0; col <3; col++){
+                    for(var row = 0; row < 3; row++){
+                    function assignHandler(rowww, column, game){
+                    var cell = document.getElementById('grid' + game + 'x' + rowww + 'y' + column);
+                    var doit = new Function(callback(rowww, column));
+                    cell.onclick = doit;
+                    }
+                    assignHandler(row,col, this.gameNumber);
+                }
+            }
+        }
+
+        this.getAction = function(){
+            return(this.callback);
         }
 	}
 
