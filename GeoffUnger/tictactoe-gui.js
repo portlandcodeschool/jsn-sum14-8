@@ -1,8 +1,9 @@
 var TicTacToeGui = function() { //module returning constructor:
 
-	// Your code here...
 
 	function Constructor() {
+
+
 		this.clear = function(){
             var allSquares = document.getElementsByTagName("td");
             for(var i = 0; i < 9; i++){
@@ -18,4 +19,27 @@ var TicTacToeGui = function() { //module returning constructor:
 
  	// more code...
 	return Constructor;	// return TTT gui constructor
+
+
+
 }();
+
+var gameNumber = 0;
+var drawHTML = function(){
+    var gameDiv = document.getElementById("tictactoe");
+    var gameTable = document.createElement("table");
+    var tableRow, tableCol;
+    gameTable.setAttribute("id", "grid" + gameNumber);
+    table = gameDiv.appendChild(gameTable);
+    for (var row = 0; row < 3; row++){
+        tableRow = document.createElement("tr")
+        gameTable.appendChild(tableRow);
+        for(col = 0; col < 3; col++){
+            tableCol = document.createElement("td");
+            tableCol.setAttribute("id", "grid" + gameNumber + "x" + col + "y" + row);
+            tableRow.appendChild(tableCol);
+
+        }
+    }
+}
+window.addEventListener('load', drawHTML);
