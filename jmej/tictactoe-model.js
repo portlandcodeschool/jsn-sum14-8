@@ -1,8 +1,15 @@
-var TicTacToeGame = (function(){
+var gameOverMsg = function(){alert("Game Over!");} //optional callbackfn for game model
+
+
+var TicTacToeGame = function(endgameCallback, gui){ //model module returning contructor
 var squares = ["*", "*", "*", "*", "*", "*", "*", "*", "*"];
 var address = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
  
-function TicTacToeBoard(callbackFn){
+function TicTacToeBoard(endgameCallback,gui){
+    
+    this.xytoxyObj = function(x,y) { //takes x and y, returning xyObj that looks like {x:0, y:0}
+       return {x:+x,y:+y};
+    }
     this.move = function(x, y, player){
         var newMove = String(x)+String(y);
         var square = address.indexOf(newMove);
@@ -11,7 +18,8 @@ function TicTacToeBoard(callbackFn){
             console.log(squares[square]+" already made that move!");
             }
         else{
-            squares[square] = player; 
+            squares[square] = player;
+            gui.mark(this.xytoxyObj(x, y), player);
             console.log("nice move "+player);
             this.show();
             this.win();
@@ -21,19 +29,23 @@ function TicTacToeBoard(callbackFn){
         for (var i = 0; i<3; i++){       
         if ((((squares[4] == squares[8]) && (squares[4] == squares [0])) || ((squares[4] == squares[2]) && (squares[4] == squares [6]))) && (squares[4] != "*"))
           {console.log(squares[4] + " is the winner!"); //finds diagonal wins
-          callbackFn();}  
-          else if ((squares[i * 3] != "*") && ((squares[i * 3] == squares[i * 3 + 1]) && 
-              (squares[i * 3] == squares[i * 3 + 2]))) //finds horizontal wins
-               {console.log(squares[i*3] + " is the winner!");
-           return [{x:address[i*3][0], y:address[i*3][1]}, {x:address[(i*3)+1][0], y:address[(i*3)+1][1]}, {x:address[(i*3)+2][0], y:address[(i*3)+2][1]}];
-           callbackFn();
-          }
-              else if (((squares[i] != "*")&&(squares[i] == squares[i+3])) && (squares[i] == squares [i+6])) //finds vertical wins
-          {console.log(squares[i] + " is the winner!");
-          return [{x:address[i][0], y:address[i][1]}, {x:address[i+3][0], y:address[i+3][1]}, {x:address[i+6][0], y:address[i+6][1]}];
+          this.clear()
           callbackFn();
           }
-        }
+          else if ((squares[i * 3] != "*") && ((squares[i * 3] == squares[i * 3 + 1]) && 
+              (squares[i * 3] == squares[i * 3 + 2]))) //finds horizontal wins
+              {console.log(squares[i*3] + " is the winner!");
+              this.clear();
+              callbackFn();
+              return [{x:address[i*3][0], y:address[i*3][1]}, {x:address[(i*3)+1][0], y:address[(i*3)+1][1]}, {x:address[(i*3)+2][0], y:address[(i*3)+2][1]}];
+             }
+              else if (((squares[i] != "*")&&(squares[i] == squares[i+3])) && (squares[i] == squares [i+6])) //finds vertical wins
+               {console.log(squares[i] + " is the winner!");
+               this.clear();
+               callbackFn();
+               return [{x:address[i][0], y:address[i][1]}, {x:address[i+3][0], y:address[i+3][1]}, {x:address[i+6][0], y:address[i+6][1]}];
+             }
+          }
       } 
     this.show = function(){
         var row0 = String(squares[0])+" "+String(squares[1])+" "+String(squares[2]);
@@ -45,10 +57,11 @@ function TicTacToeBoard(callbackFn){
     this.clear = function(){
         squares = ["*", "*", "*", "*", "*", "*", "*", "*", "*"];
         this.show();
+        gui.clearall(); 
     }
-}
+};
+return TicTacToeBoard;
+}();
 
-var gameOverMsg = function(){alert("Game Over!");}
-var game = new TicTacToeBoard(gameOverMsg);
-return game;
-})();
+//var gui1 = new TicTacToeGui();
+//var game1 = new TicTacToeGame(gameOverMsg, gui1);
