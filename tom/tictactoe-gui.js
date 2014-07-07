@@ -14,9 +14,10 @@ var TicTacToeGui = function() { //module returning constructor:
     this.clear = function() {
       var table = document.getElementById('grid0');
       var cells = document.getElementsByTagName('td');
+      console.log(cells);
       for (var i = 0; i < cells.length; i++) {
         if (table.contains(cells[i])) { //To allow for multiple boards
-          cells[i].innerText = '';
+          cells[i].innerHTML = '';
         }
       }
     };

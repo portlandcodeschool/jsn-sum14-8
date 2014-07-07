@@ -49,7 +49,7 @@ var TicTacToeGame = function() { //module returning constructor:
 
   // ========= Board constructor: ==========
 
-  function Board(endGameFn) {
+  function Board(endGameFn, gui) {
     var marks = cleanMarks;
     //private data, specific to one board; represents 9 spaces.
     // Could be array, but simpler to use string: each char is ' ','X','O', or newline
@@ -69,6 +69,7 @@ var TicTacToeGame = function() { //module returning constructor:
       // check if empty:
       if (marks[n] != emptyMark) return false;
       // leave mark:
+      if (gui) {gui.mark(xyToObj(x+''+y), mark); console.log('placing');}; 
       numMarks++;
       marks = //string equivalent of marks[n]=mark :
         marks.substr(0,n) + // preceding chars
@@ -94,6 +95,7 @@ var TicTacToeGame = function() { //module returning constructor:
 
     this.clear = function() {
       marks = cleanMarks;
+      if (gui) {gui.clear();}
       numMarks = 0;
     }
 
@@ -146,13 +148,13 @@ function gameOver2(trio) {
 
 
 // Test sample:
-var board1 = new TicTacToeGame(gameOver1);
-var board2 = new TicTacToeGame(gameOver2);
+var testGui = new TicTacToeGui();
+var board1 = new TicTacToeGame(gameOver1, testGui);
+var board2 = new TicTacToeGame(gameOver2, testGui);
 
 var board=board2; // switch to try other callback
 
-/*
-board.placeO(0,0);
+/* board.placeO(0,0);
 board.placeX(1,0);
 board.placeO(2,2);
 board.placeX(1,2);
@@ -173,4 +175,4 @@ board.placeX(1,2);
 board.placeO(1,0);
 board.placeO(0,2);
 board.placeO(1,1);
-board.placeO(2,2); //--> draw */
+board.placeO(2,2); */
