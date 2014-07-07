@@ -1,3 +1,18 @@
+function installTicTacToe() {
+// consider making these global during debugging...
+var gui = new TicTacToeGui();
+var game = new TicTacToeGame(null, //optional endgame callback
+gui); //optional game interface
+return game;
+};
+
+
+window.addEventListener("load", installTicTacToe);// runs when all HTML has loaded
+
+// you should be able to call installTicTacToe manually
+// to install more games in the same window!
+
+/*
 function TicTacToeBoard() {
 
   var rows = [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']],
@@ -161,3 +176,4 @@ test.placeO(1,3);
 test.placeX(3,1);
 test.show();
 console.log(test.winner());
+*/
