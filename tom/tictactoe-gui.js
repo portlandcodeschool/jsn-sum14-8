@@ -19,12 +19,12 @@ var TicTacToeGui = function() { //module returning constructor:
           var td = document.createElement('td');
           td.setAttribute('id', 'grid' + boardCount + 'x' + j  + 'y' + i);
           td.setAttribute('id', 'grid' + boardCount + 'x' + j  + 'y' + i);
-          /*if (i = 0) {
+          if (i == 0) {
             td.classList.add('top');
           }
-          if (j = 0) {
+          if (j == 0) {
             td.classList.add('left');
-          }*/
+          }
           tr.appendChild(td);
         }
         table.appendChild(tr);
