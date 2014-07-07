@@ -14,28 +14,54 @@ window.addEventListener("load", installTicTacToe);// runs when all HTML has load
 
 var TicTacToeGui = function() { //module returning constructor:
 
-	// Your code here...
+  // draw gui here
+    var xyToId function(x,y) {
+     return 'x'+x+'y'+y;
+    }
+    
+    var drawBoard = function(){
+    var table = document.createElement('table');
+    table.setAttribute('id','grid0');
+        document.body.appendChild(table);
 
-	function Constructor() {
-		
-		this.clearall = function (){
-			for (var y = 0; y < 3; y++){
-				for (var x = 0; x < 3; x++){
-				var elem = document.getElementById('grid0'+'x'+x+'y'+y)
-				elem.innerHTML = "";
-				}
-			}
-		};
+    var tr, td;
+    for (var row = 0; row<3; row++) {
+      tr = document.createElement('tr');
+      table.appendChild(tr);
+      for (var col = 0; col<3; col++) {
+        td = document.createElement('td');
+        td.setAttribute('id',xyToId(col,row));
+        tr.appendChild(td);
+      }
+    }
+  }
+            return drawBoard;
+}
+
+var board = TicTacToeGui();
+
+
+// constructor below
+  function Constructor() {
+    
+    this.clearall = function (){
+      for (var y = 0; y < 3; y++){
+        for (var x = 0; x < 3; x++){
+        var elem = document.getElementById('grid0'+'x'+x+'y'+y)
+        elem.innerHTML = "";
+        }
+      }
+    };
         
-		this.mark = function(xyObj,symbol){ //accepts xyObj that looks like {x:0, y:0}
-			var elem = document.getElementById('grid0'+'x'+xyObj.x+'y'+xyObj.y);
-			elem.innerHTML = symbol;
-			elem.classList.add('mark');	
-		} 
-	};
+    this.mark = function(xyObj,symbol){ //accepts xyObj that looks like {x:0, y:0}
+      var elem = document.getElementById('grid0'+'x'+xyObj.x+'y'+xyObj.y);
+      elem.innerHTML = symbol;
+      elem.classList.add('mark'); 
+    } 
+  };
 
- 	// more code...
-	return Constructor;	// return TTT gui constructor
+  // more code...
+  return Constructor; // return TTT gui constructor
 }();
 
 
@@ -55,7 +81,7 @@ function TicTacToeBoard(endgameCallback,gui){
     
     this.xytoxyObj = function(x,y) { //takes x and y, returning xyObj that looks like {x:0, y:0}
        return {x:+x,y:+y};
-		}
+    }
     this.move = function(x, y, player){
         var newMove = String(x)+String(y);
         var square = address.indexOf(newMove);
