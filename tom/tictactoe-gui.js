@@ -2,14 +2,13 @@ var TicTacToeGui = function() { //module returning constructor:
 
   this.interpolateId = function(xyObj) {
     var id = 'grid0x' + xyObj.x + 'y' + xyObj.y;
-    console.log(id);
     return id;
   };
 
   function Constructor() {
 
     this.mark = function(xyObj, symbol) {
-      document.getElementById(interpolateId(xyObj)).innerText = symbol;
+      document.getElementById(interpolateId(xyObj)).innerHTML = symbol;
     };
 
     this.clear = function() {
@@ -29,3 +28,5 @@ var TicTacToeGui = function() { //module returning constructor:
   // more code...
   return Constructor;	// return TTT gui constructor
 }();
+var gui = new TicTacToeGui;
+
