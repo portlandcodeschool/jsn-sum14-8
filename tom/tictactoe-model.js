@@ -82,14 +82,28 @@ var TicTacToeGame = function() { //module returning constructor:
 
       return mark;
     }
+var turn = 'X';
 
+function whoseTurn() {
+  return turn;
+}
+
+this.takeTurn = function(x,y) {
+  if (whoseTurn() === 'X') {
+    this.placeX(x,y);
+  } else {
+    this.placeO(x,y);
+  }
+}
     // --- Public methods: ---
 
     this.placeX = function(x,y) {
+      turn = 'O';
       return placeMark(x,y,'X');
     }
 
     this.placeO = function(x,y) {
+      turn = 'X';
       return placeMark(x,y,'O');
     }
 
