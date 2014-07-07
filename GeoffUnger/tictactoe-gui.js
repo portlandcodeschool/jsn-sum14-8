@@ -1,6 +1,7 @@
 var TicTacToeGui = function () { //module returning constructor:
 
     var gameNumber = 0;
+    var gameState = "O";
     var callback = new Function();
 
     function Constructor() {
@@ -60,8 +61,31 @@ var TicTacToeGui = function () { //module returning constructor:
             }
         }
 
+        for(var col = 0; col < 3; col++){
+            for(var row = 0; row < 3; row++){
+                var cell = document.getElementById('grid' + this.gameNumber + 'x' + row + 'y' + col);
+                cell.addEventListener('mouseenter', function(){
+                    if(!cell.textContent){
+                        console.log("Mouse entered the space, gameState is: " + gameState);
+                    }
+                });
+                cell.addEventListener('mouseleave', function(){
+                    console.log("Just left a space");
+                });
+
+            }
+        }
+
         this.getAction = function () {
             return(this.callback);
+        }
+
+        this.getState = function(){
+            return gameState;
+        }
+
+        this.setState = function(newState){
+            gameState = newState;
         }
 
     }
