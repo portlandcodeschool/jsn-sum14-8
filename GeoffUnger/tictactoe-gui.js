@@ -39,7 +39,8 @@ var TicTacToeGui = function () { //module returning constructor:
         }
 
         this.setAction = function (callback) {
-
+            console.log("setAction called with :");
+            console.dir(callback);
             for (var col = 0; col < 3; col++) {
                 for (var row = 0; row < 3; row++) {
                     var cell = document.getElementById('grid' + this.gameNumber + 'x' + row + 'y' + col);

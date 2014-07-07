@@ -3,6 +3,7 @@ var TicTacToeGame = function() { //module returning constructor:
 	// Revised HW5 solution here, including...
     function TicTacToeBoard(callBack, gui) {
         if(!callBack) callBack = function(msg){console.log(msg)};
+
         var turn = "O";
         var size = 3;
         var cells = [];
@@ -69,12 +70,19 @@ var TicTacToeGame = function() { //module returning constructor:
             })
             return success;
         }
-        this.placeX = function (x, y) {
+
+        placeX = function (x, y) {
             return place(x,y,"x",1);
         }
-        this.placeO = function (x, y) {
+
+        this.placeX = placeX;
+
+        placeO = function (x, y) {
             return place(x,y,"o", -1);
         }
+
+        this.placeO = placeO;
+
         var clear = function () {
             gui && gui.clear();
             cells.map(function (item) {
@@ -95,19 +103,21 @@ var TicTacToeGame = function() { //module returning constructor:
 
         var takeTurn = function(x,y){
 
-            if(this.whoseTurn() === 'X'){
-                this.placeX(x,y);
+            if(whoseTurn() === 'X'){
+                placeX(x,y);
                 turn = "O";
                 return;
             }
-            if(this.whoseTurn() === 'O'){
-                this.placeO(x,y);
+            if(whoseTurn() === 'O'){
+                placeO(x,y);
                 turn = "X";
                 return;
             }
         }
 
         this.takeTurn = takeTurn;
+
+        gui && gui.setAction(takeTurn);
 
         var winner = function () {
             var result = [];
