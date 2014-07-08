@@ -12,38 +12,63 @@ window.addEventListener("load", installTicTacToe);// runs when all HTML has load
 // you should be able to call installTicTacToe manually
 //   to install more games in the same window!
 
-var TicTacToeGui = function() { //module returning constructor:
-
-  // draw gui here
-    var xyToId function(x,y) {
-     return 'x'+x+'y'+y;
+var htmlInit = function(tableid){
+    
+   var xyToId = function(x,y) {
+       return 'x'+x+'y'+y;
     }
     
-    var drawBoard = function(){
-    var table = document.createElement('table');
-    table.setAttribute('id','grid0');
-        document.body.appendChild(table);
+    var drawBoard = function(tableid){
+       var div = document.getElementById('tictactoe')
+       var table = document.createElement('table');
+       table.setAttribute('id','grid'+nextid);
+       div.appendChild(table);
 
-    var tr, td;
-    for (var row = 0; row<3; row++) {
-      tr = document.createElement('tr');
-      table.appendChild(tr);
-      for (var col = 0; col<3; col++) {
-        td = document.createElement('td');
-        td.setAttribute('id',xyToId(col,row));
-        tr.appendChild(td);
+       var tr, td;
+       for (var row = 0; row<3; row++) {
+          tr = document.createElement('tr');
+          table.appendChild(tr);
+             for (var col = 0; col<3; col++) {
+                td = document.createElement('td');
+                td.setAttribute('id',xyToId(col,row));
+                tr.appendChild(td);
       }
     }
   }
-            return drawBoard;
+      return drawBoard;
 }
 
-var board = TicTacToeGui();
+//htmlInit(0);
 
+
+var TicTacToeGui = function() { //module returning constructor and initializing html elements:
+    var nextid = 0;
+    var xyToId = function(x,y) {
+       return 'x'+x+'y'+y;
+    }
+    
 
 // constructor below
   function Constructor() {
-    
+      
+    this.makeboard = function(nextid){
+       var div = document.getElementById('tictactoe')
+       var table = document.createElement('table');
+       table.setAttribute('id',nextid);
+       div.appendChild(table);
+
+       var tr, td;
+       for (var row = 0; row<3; row++) {
+          tr = document.createElement('tr');
+          table.appendChild(tr);
+             for (var col = 0; col<3; col++) {
+                td = document.createElement('td');
+                td.setAttribute('id',xyToId(col,row));
+                tr.appendChild(td);
+         }
+       }
+     }
+   
     this.clearall = function (){
       for (var y = 0; y < 3; y++){
         for (var x = 0; x < 3; x++){
@@ -58,7 +83,7 @@ var board = TicTacToeGui();
       elem.innerHTML = symbol;
       elem.classList.add('mark'); 
     } 
-  };
+  }
 
   // more code...
   return Constructor; // return TTT gui constructor
@@ -76,6 +101,7 @@ var gameOverMsg = function(){alert("Game Over!");} //optional callbackfn for gam
 var TicTacToeGame = function(endgameCallback, gui){ //model module returning contructor
 var squares = ["*", "*", "*", "*", "*", "*", "*", "*", "*"];
 var address = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
+var turn = 'X';
  
 function TicTacToeBoard(endgameCallback,gui){
     
@@ -92,6 +118,10 @@ function TicTacToeBoard(endgameCallback,gui){
         else{
             squares[square] = player;
             gui.mark(this.xytoxyObj(x, y), player);
+            if (turn == 'X'){
+              turn = 'O'
+            }
+            else turn = 'X';
             console.log("nice move "+player);
             this.show();
             this.win();
@@ -128,12 +158,22 @@ function TicTacToeBoard(endgameCallback,gui){
     }
     this.clear = function(){
         squares = ["*", "*", "*", "*", "*", "*", "*", "*", "*"];
+        turn = 'X';
         this.show();
         gui.clearall(); 
+    }
+    this.whoseTurn = function(){// returns either 'X' or 'O'
+        return turn;
+    }
+    this.takeTurn = function(x,y){ // calls either placeX(x,y) or placeO(x,y), depending on whoseTurn().
+      this.move(x,y,turn);
     }
 };
 return TicTacToeBoard;
 }();
 
-var gui1 = new TicTacToeGui();
+var gui = new TicTacToeGui();
+gui.makeboard();
 var game1 = new TicTacToeGame(gameOverMsg, gui1);
+board();
+game1.move(0,0);
