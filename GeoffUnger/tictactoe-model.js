@@ -72,13 +72,13 @@ var TicTacToeGame = function() { //module returning constructor:
         }
 
         placeX = function (x, y) {
-            return place(x,y,"x",1);
+            return place(x,y,"X",1);
         }
 
         this.placeX = placeX;
 
         placeO = function (x, y) {
-            return place(x,y,"o", -1);
+            return place(x,y,"O", -1);
         }
 
         this.placeO = placeO;
