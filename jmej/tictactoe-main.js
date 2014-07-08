@@ -14,6 +14,7 @@ window.addEventListener("load", installTicTacToe);// runs when all HTML has load
 
 
 
+
 var TicTacToeGui = function() { //module returning constructor and initializing html elements:
     var nextId = 0;
     var xyToId = function(x,y) {
@@ -78,7 +79,7 @@ var address = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
 var turn = 'X';
  
 function TicTacToeBoard(endgameCallback,gui){
-    
+    gui.makeboard();
     this.xytoxyObj = function(x,y) { //takes x and y, returning xyObj that looks like {x:0, y:0}
        return {x:+x,y:+y};
     }
@@ -146,12 +147,11 @@ function TicTacToeBoard(endgameCallback,gui){
 return TicTacToeBoard;
 }();
 
-var board = new TicTacToeGui();
-board.makeboard();
-var board2 = new TicTacToeGui();
-board2.makeboard();
-var game1 = new TicTacToeGame(gameOverMsg, board);
-var game2 = new TicTacToeGame(gameOverMsg, board2);
+var gui = new TicTacToeGui();
+var gui2 = new TicTacToeGui();
+var game1 = new TicTacToeGame(gameOverMsg, gui);
+var game2 = new TicTacToeGame(gameOverMsg, gui2);
 game1.takeTurn(0,2);
 game2.takeTurn(0,0);
+
 
