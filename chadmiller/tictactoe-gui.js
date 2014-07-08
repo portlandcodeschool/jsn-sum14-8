@@ -1,6 +1,6 @@
 var TicTacToeGui = function() {
 
-	var nextId = 0;
+  var nextId = 0;
 
 	// clear the board of all marks
   function clear() {
@@ -99,19 +99,19 @@ var TicTacToeGui = function() {
   }
 
 	function Constructor() {
-		this.id = nextId;
-		this.board = null;
-		this.callback = null;
-		this.gameOver = false;
-		this.clear = clear;
-		this.mark = mark;
-		this.setAction = setAction;
-		this.getAction = getAction;
-		this.newState = 'X';
-		this.getState = getState;
-		this.setState = setState;
-		this.makeBoard = makeBoard;
-	}
+    this.id = nextId;
+    this.board = null;
+    this.callback = null;
+    this.gameOver = false;
+    this.clear = clear;
+    this.mark = mark;
+    this.setAction = setAction;
+    this.getAction = getAction;
+    this.newState = 'X';
+    this.getState = getState;
+    this.setState = setState;
+    this.makeBoard = makeBoard;
+  }
 
-	return Constructor;
+  return Constructor;
 }();

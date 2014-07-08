@@ -119,31 +119,31 @@ var TicTacToeGame = function() {
     this.placeO(x, y);
   }
 
-	function Constructor(endgameFn, gui) {
-		var game = this;
-		this.board = [
+  function Constructor(endgameFn, gui) {
+    var game = this;
+    this.board = [
       ['-', '-', '-'],
       ['-', '-', '-'],
       ['-', '-', '-']
     ];
-		this.nextTurn = 'X';
-		this.placeO = placeO;
-		this.placeX = placeX;
-		this.winner = winner;
-		this.clear = clear;
-		this.show = show;
-		this.whoseTurn = whoseTurn;
-		this.takeTurn = takeTurn;
-		this.endgameFn = endgameFn || gameOver;
-		this.gui = gui || null;
+    this.nextTurn = 'X';
+    this.placeO = placeO;
+    this.placeX = placeX;
+    this.winner = winner;
+    this.clear = clear;
+    this.show = show;
+    this.whoseTurn = whoseTurn;
+    this.takeTurn = takeTurn;
+    this.endgameFn = endgameFn || gameOver;
+    this.gui = gui || null;
 
-		if (this.gui) {
-		  this.gui.makeBoard();
-		  this.gui.setAction(function(x,y) {
-		    game.takeTurn(x,y);
-		  });
-		}
-	}
+    if (this.gui) {
+      this.gui.makeBoard();
+      this.gui.setAction(function(x,y) {
+        game.takeTurn(x,y);
+      });
+    }
+  }
 
-	return Constructor;	// return TTT game constructor
+  return Constructor;	// return TTT game constructor
 }();
