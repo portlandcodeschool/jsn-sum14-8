@@ -1,6 +1,12 @@
-    td{
-      border: 1px solid black;
-      height: 40px;
-      width: 40px;
-      empty-cells: show;
-    }
+td{
+    border: 1px solid black;
+    height: 40px;
+    width: 40px;
+   	text-align:center;
+	font-size:18pt;
+    empty-cells: show;
+}
+
+td.Mark {
+	color:gray;
+}

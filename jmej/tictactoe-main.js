@@ -14,21 +14,18 @@ window.addEventListener("load", installTicTacToe);// runs when all HTML has load
 
 
 
-
-
 var TicTacToeGui = function() { //module returning constructor and initializing html elements:
     var nextId = 0;
     var xyToId = function(x,y) {
        return 'x'+x+'y'+y;
     }
-    
 
 // constructor below
   function Constructor() {
     
     this.guiId = nextId;
     nextId += 1;
-      
+   
     this.makeboard = function(nextid){
        var div = document.getElementById('tictactoe')
        var table = document.createElement('table');
@@ -42,11 +39,18 @@ var TicTacToeGui = function() { //module returning constructor and initializing 
              for (var col = 0; col<3; col++) {
                 td = document.createElement('td');
                 td.setAttribute('id',this.guiId+xyToId(col,row));
+                this.prepareForClicks(td,col,row);
                 tr.appendChild(td);
          }
        }
      }
    
+     this.prepareForClicks = function(elem,x,y) {
+      var objRef = this;
+      if (!elem) return;
+      elem.addEventListener("click",function(){objRef.clickAction(x,y);});
+    }   
+        
     this.clearall = function (){
       for (var y = 0; y < 3; y++){
         for (var x = 0; x < 3; x++){
@@ -61,26 +65,32 @@ var TicTacToeGui = function() { //module returning constructor and initializing 
       elem.innerHTML = symbol;
       elem.classList.add('mark'); 
     } 
+    
+    this.setAction = function(callback){
+       if (!callback) return; 
+       this.clickAction = callback;
+    }
+    this.clickAction = function(x,y) {  //this.game is set by the TicTacToeBoard function on the logic side of things
+        console.log('You clicked on gui '+this.guiId+' x:'+x+' , y: '+y);
+        this.game.takeTurn(x,y);
+    }
   }
+
+
   return Constructor; // return TTT gui constructor
 }();
 
-
-//var tttgame = new TicTacToeGui();
-
-//tttgame.mark({x:0,y:0},'o');
-
-//tttgame.clear();
 var gameOverMsg = function(){alert("Game Over!");} //optional callbackfn for game model
 
 
-var TicTacToeGame = function(endgameCallback, gui){ //model module returning contructor
-var squares = ["*", "*", "*", "*", "*", "*", "*", "*", "*"];
-var address = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
-var turn = 'X';
+var TicTacToeGame = function(endgameCallback, gui){ //module returning game model contructor
  
 function TicTacToeBoard(callback,gui){
+    var squares = ["*", "*", "*", "*", "*", "*", "*", "*", "*"];
+    var address = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
+    var turn = 'X';
     gui.makeboard();
+    gui.game = this; //gives the gui a property pointing to the correct game instance
     this.xytoxyObj = function(x,y) { //takes x and y, returning xyObj that looks like {x:0, y:0}
        return {x:+x,y:+y};
     }
@@ -152,10 +162,5 @@ var gui = new TicTacToeGui();
 var gui2 = new TicTacToeGui();
 var game1 = new TicTacToeGame(gameOverMsg, gui);
 var game2 = new TicTacToeGame(gameOverMsg, gui2);
-game1.takeTurn(0,2);
-game2.takeTurn(0,0);
-
-
-
-
-
+//game1.takeTurn(0,2);
+//game2.takeTurn(0,0);
