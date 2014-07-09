@@ -15,6 +15,7 @@ window.addEventListener("load", installTicTacToe);// runs when all HTML has load
 
 
 
+
 var TicTacToeGui = function() { //module returning constructor and initializing html elements:
     var nextId = 0;
     var xyToId = function(x,y) {
@@ -78,7 +79,7 @@ var squares = ["*", "*", "*", "*", "*", "*", "*", "*", "*"];
 var address = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
 var turn = 'X';
  
-function TicTacToeBoard(endgameCallback,gui){
+function TicTacToeBoard(callback,gui){
     gui.makeboard();
     this.xytoxyObj = function(x,y) { //takes x and y, returning xyObj that looks like {x:0, y:0}
        return {x:+x,y:+y};
@@ -107,19 +108,19 @@ function TicTacToeBoard(endgameCallback,gui){
         if ((((squares[4] == squares[8]) && (squares[4] == squares [0])) || ((squares[4] == squares[2]) && (squares[4] == squares [6]))) && (squares[4] != "*"))
           {console.log(squares[4] + " is the winner!"); //finds diagonal wins
           this.clear()
-          callbackFn();
+          callback();
           }
           else if ((squares[i * 3] != "*") && ((squares[i * 3] == squares[i * 3 + 1]) && 
               (squares[i * 3] == squares[i * 3 + 2]))) //finds horizontal wins
               {console.log(squares[i*3] + " is the winner!");
               this.clear();
-              callbackFn();
+              callback();
               return [{x:address[i*3][0], y:address[i*3][1]}, {x:address[(i*3)+1][0], y:address[(i*3)+1][1]}, {x:address[(i*3)+2][0], y:address[(i*3)+2][1]}];
              }
               else if (((squares[i] != "*")&&(squares[i] == squares[i+3])) && (squares[i] == squares [i+6])) //finds vertical wins
                {console.log(squares[i] + " is the winner!");
                this.clear();
-               callbackFn();
+               callback();
                return [{x:address[i][0], y:address[i][1]}, {x:address[i+3][0], y:address[i+3][1]}, {x:address[i+6][0], y:address[i+6][1]}];
              }
           }
@@ -153,5 +154,8 @@ var game1 = new TicTacToeGame(gameOverMsg, gui);
 var game2 = new TicTacToeGame(gameOverMsg, gui2);
 game1.takeTurn(0,2);
 game2.takeTurn(0,0);
+
+
+
 
 
