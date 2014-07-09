@@ -37,10 +37,7 @@ var TicTacToeGui = function () { //module returning constructor:
             console.log('grid' + this.gameNumber + 'x' + xyObj.x + 'y' + xyObj.y);
             var box = document.getElementById('grid' + this.gameNumber + 'x' + xyObj.x + 'y' + xyObj.y);
             box.innerText = symbol;
-            //box.removeAllListeners();
-            //box.onclick = null;
-            box.onmouseenter = null;
-            box.onmouseleave = null;
+
         }
 
         this.setAction = function (callback) {
@@ -67,7 +64,7 @@ var TicTacToeGui = function () { //module returning constructor:
             for(var row = 0; row < 3; row++){
                 var cell = document.getElementById('grid' + this.gameNumber + 'x' + row + 'y' + col);
                 cell.addEventListener('mouseenter', function(){
-                    this.textContent = getState();
+                    //this.textContent = getState();
                 });
                 cell.addEventListener('mouseleave', function(){
                     this.textContent = null;
