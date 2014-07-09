@@ -35,7 +35,6 @@ var TicTacToeGui = function () { //module returning constructor:
 
         }
         this.mark = function (xyObj, symbol) {
-            //console.log('grid' + this.gameNumber + 'x' + xyObj.x + 'y' + xyObj.y);
             var box = document.getElementById('grid' + this.gameNumber + 'x' + xyObj.x + 'y' + xyObj.y);
             box.textContent = symbol;
 
@@ -46,16 +45,22 @@ var TicTacToeGui = function () { //module returning constructor:
                 for (var row = 0; row < 3; row++) {
                     var cell = document.getElementById('grid' + this.gameNumber + 'x' + row + 'y' + col);
 
-                    function callbackMaker(r, c, cb) {
+                    function callbackMaker(r, c, cb, gn) {
                         var innerCB = cb;
                         var innerRow = r;
                         var innerCol = c;
+                        var innerGn = gn;
                         return function () {
+                            var innerCell = document.getElementById('grid' + innerGn + 'x' + innerRow + 'y' + innerCol);
                             innerCB(innerRow, innerCol);
+                            console.log("Removing event listener from: " + innerCell.id);
+                            innerCell.removeEventListener('mouseenter', addNextMove, false);
+                            innerCell.removeEventListener('mouseleave', removeNextMove, false);
                         }
                     }
 
-                    cell.onclick = callbackMaker(row, col, callback);
+                    cell.addEventListener('click', callbackMaker(row, col, callback, this.gameNumber));
+
                 }
 
             }
@@ -64,12 +69,14 @@ var TicTacToeGui = function () { //module returning constructor:
         for(var col = 0; col < 3; col++){
             for(var row = 0; row < 3; row++){
                 var cell = document.getElementById('grid' + this.gameNumber + 'x' + row + 'y' + col);
-                cell.addEventListener('mouseenter', function(){
+                var addNextMove = function(){
                     this.textContent = getState();
-                });
-                cell.addEventListener('mouseleave', function(){
+                };
+                var removeNextMove = function(){
                     this.textContent = "";
-                });
+                }
+                cell.addEventListener('mouseenter', addNextMove);
+                cell.addEventListener('mouseleave', removeNextMove);
 
             }
         }
@@ -114,22 +121,4 @@ var TicTacToeGui = function () { //module returning constructor:
     return Constructor;	// return TTT gui constructor
 }()
 
-/*var gameNumber = 0;
- var drawHTML = function(){
- var gameDiv = document.getElementById("tictactoe");
- var gameTable = document.createElement("table");
- var tableRow, tableCol;
- gameTable.setAttribute("id", "grid" + gameNumber);
- table = gameDiv.appendChild(gameTable);
- for (var row = 0; row < 3; row++){
- tableRow = document.createElement("tr")
- gameTable.appendChild(tableRow);
- for(col = 0; col < 3; col++){
- tableCol = document.createElement("td");
- tableCol.setAttribute("id", "grid" + gameNumber + "x" + col + "y" + row);
- tableRow.appendChild(tableCol);
 
- }
- }
- }*/
-//window.addEventListener('load', drawHTML);
