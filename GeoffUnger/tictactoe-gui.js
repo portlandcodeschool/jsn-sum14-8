@@ -8,6 +8,7 @@ var TicTacToeGui = function () { //module returning constructor:
 
         var gameDiv = document.getElementById("tictactoe");
         var gameTable = document.createElement("table");
+        var infoArea = document.getElementById("infoArea");
         var tableRow, tableCol;
         gameTable.setAttribute("id", "grid" + gameNumber);
         table = gameDiv.appendChild(gameTable);
@@ -34,9 +35,9 @@ var TicTacToeGui = function () { //module returning constructor:
 
         }
         this.mark = function (xyObj, symbol) {
-            console.log('grid' + this.gameNumber + 'x' + xyObj.x + 'y' + xyObj.y);
+            //console.log('grid' + this.gameNumber + 'x' + xyObj.x + 'y' + xyObj.y);
             var box = document.getElementById('grid' + this.gameNumber + 'x' + xyObj.x + 'y' + xyObj.y);
-            box.innerText = symbol;
+            box.textContent = symbol;
 
         }
 
@@ -67,7 +68,7 @@ var TicTacToeGui = function () { //module returning constructor:
                     //this.textContent = getState();
                 });
                 cell.addEventListener('mouseleave', function(){
-                    this.textContent = null;
+                    //this.textContent = null;
                 });
 
             }
@@ -77,12 +78,35 @@ var TicTacToeGui = function () { //module returning constructor:
             return(this.callback);
         }
 
-        getState = function(){
+        this.getState = function(){
             return gameState;
         }
 
         this.setState = function(newState){
+            
             gameState = newState;
+
+            switch (newState)
+            {
+
+                case "X":
+                    infoArea.textContent = "It's player X's turn.";
+                    break;
+                case "O":
+                    infoArea.textContent = "It's player O's turn.";
+                    break;
+                case null:
+                    infoArea.textContent = "The game was a draw";
+                    alert("Game was a draw!");
+                    break;
+                case "winner-X":
+                    infoArea.textContent = "X won!";
+                    alert("X won!");
+                    break;
+                case "winner-O":
+                    infoArea.textContent = "O won!";
+                    alert("O won!");
+            }
         }
 
     }

@@ -1,19 +1,22 @@
-var TicTacToeGame = function() { //module returning constructor:
+var TicTacToeGame = function () { //module returning constructor:
 
-	// Revised HW5 solution here, including...
+    // Revised HW5 solution here, including...
     function TicTacToeBoard(callBack, gui) {
-        if(!callBack) callBack = function(msg){console.log(msg)};
+        if (!callBack) callBack = function (msg) {
+            console.log(msg)
+        };
 
         var turn = "O";
+        gui.setState("O");
         var size = 3;
         var cells = [];
-        var numCells = (Math.pow(size,2));
+        var numCells = (Math.pow(size, 2));
         var xPos = 0;
         var yPos = 0;
         var gridScore = [];
         var numberOfMoves = 0;
 
-        for(i = 0; i < ((size*2)+2); i++){
+        for (i = 0; i < ((size * 2) + 2); i++) {
             gridScore[i] = 0;
         }
 
@@ -23,7 +26,7 @@ var TicTacToeGame = function() { //module returning constructor:
             cells[i].yPos = yPos;
             cells[i].contents = ".";
             xPos++;
-            if (xPos > (size-1)) {
+            if (xPos > (size - 1)) {
                 yPos++;
                 xPos = 0;
             }
@@ -44,21 +47,22 @@ var TicTacToeGame = function() { //module returning constructor:
 
         this.show = show;
 
-        var place = function(x,y,team, score){
+        var place = function (x, y, team, score) {
             var success = true;
             cells.map(function (item) {
                 if ((item.xPos == x) && (item.yPos == y)) {
                     if (item.contents != ".") success = undefined;
                     else {
                         item.contents = team;
-                        gui && gui.mark({x:x, y:y},team);
+                        gui && gui.mark({x: x, y: y}, team);
                         gridScore[x] += score;
                         gridScore[size + y] += score;
-                        if (x == y) gridScore[(size * 2)+1] += score;
-                        if ((2 - x) == y) gridScore[(size * 2)+2] += score;
+                        if (x == y) gridScore[(size * 2) + 1] += score;
+                        if ((2 - x) == y) gridScore[(size * 2) + 2] += score;
 
                         numberOfMoves++;
-                        if(numberOfMoves == numCells) {
+                        if (numberOfMoves == numCells) {
+                            gui.setState(null);
                             callBack("The game was a draw!");
 
                             return;
@@ -72,13 +76,13 @@ var TicTacToeGame = function() { //module returning constructor:
         }
 
         placeX = function (x, y) {
-            return place(x,y,"X",1);
+            return place(x, y, "X", 1);
         }
 
         this.placeX = placeX;
 
         placeO = function (x, y) {
-            return place(x,y,"O", -1);
+            return place(x, y, "O", -1);
         }
 
         this.placeO = placeO;
@@ -88,29 +92,31 @@ var TicTacToeGame = function() { //module returning constructor:
             cells.map(function (item) {
                 item.contents = ".";
             })
-            for(i = 0; i < (size+2); i++){
+            for (i = 0; i < (size + 2); i++) {
                 gridScore[i] = 0;
             }
             numberOfMoves = 0;
             turn = "O";
+            gui.setState("O");
         }
         this.clear = clear;
 
-        var whoseTurn = function(){
+        var whoseTurn = function () {
             return turn;
         }
         this.whoseTurn = whoseTurn;
 
-        var takeTurn = function(x,y){
-
-            if(whoseTurn() === 'X'){
-                placeX(x,y);
+        var takeTurn = function (x, y) {
+            if (whoseTurn() === 'X') {
+                placeX(x, y);
                 turn = "O";
+                gui.setState("O");
                 return;
             }
-            if(whoseTurn() === 'O'){
-                placeO(x,y);
+            if (whoseTurn() === 'O') {
+                placeO(x, y);
                 turn = "X";
+                gui.setState("X");
                 return;
             }
         }
@@ -122,18 +128,30 @@ var TicTacToeGame = function() { //module returning constructor:
         var winner = function () {
             var result = [];
             gridScore.map(function (item, index) {
-                if((item == -size) || (item == size)){
+                if ((item == -size) || (item == size)) {
                     console.log("We have a winner!");
                     show();
-                    for(i = 0; i < size; i++){
-                        if(index < size) result[i] = {x:index,y:i};
-                        if(index >= size) result[i] = {x:i, y:(index-(size-1))};
-                        if(index >= ((size*2)+1)) result[i] = {x:i, y:i};
-                        if(index == ((size*2)+2)) result[i] = {x:(i), y:((size-1)-i)}
+                    for (i = 0; i < size; i++) {
+                        if (index < size) result[i] = {x: index, y: i};
+                        if (index >= size) result[i] = {x: i, y: (index - (size - 1))};
+                        if (index >= ((size * 2) + 1)) result[i] = {x: i, y: i};
+                        if (index == ((size * 2) + 2)) result[i] = {x: (i), y: ((size - 1) - i)}
                     }
-                    (item == size) ? result.winner = "x" : result.winner = "o";
+
+                    (item == size) ? result.winner = "X" : result.winner = "O";
+                    switch (result.winner) {
+                        case "X":
+                            gui.setState("winner-X");
+                            break;
+                        case "O":
+                            gui.setState("winner-O");
+                            break;
+                    }
+
+
                     callBack("The winner was " + result.winner + "!");
-                };
+                }
+                ;
 
             })
 
@@ -143,11 +161,10 @@ var TicTacToeGame = function() { //module returning constructor:
     }
 
 
-
     //function Constructor(endgameFn, gui) {
-		// more code...
-	//}
+    // more code...
+    //}
 
-	//return Constructor;	// return TTT game constructor
+    //return Constructor;	// return TTT game constructor
     return TicTacToeBoard;
 }();
