@@ -23,7 +23,6 @@ var TicTacToeGui = function () { //module returning constructor:
             }
         }
 
-
         this.gameNumber = gameNumber;
 
         gameNumber++;
