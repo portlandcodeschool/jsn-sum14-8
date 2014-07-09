@@ -14,3 +14,7 @@ p {
     font-weight: bold;
     font-size: 40px;
 }
+
+.green {
+    background-color: lightgreen;
+}

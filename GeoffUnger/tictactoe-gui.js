@@ -54,6 +54,7 @@ var TicTacToeGui = function () { //module returning constructor:
                             var innerCell = document.getElementById('grid' + innerGn + 'x' + innerRow + 'y' + innerCol);
                             innerCB(innerRow, innerCol);
                             console.log("Removing event listener from: " + innerCell.id);
+                            innerCell.classList.add('green');
                             innerCell.removeEventListener('mouseenter', addNextMove, false);
                             innerCell.removeEventListener('mouseleave', removeNextMove, false);
                         }
