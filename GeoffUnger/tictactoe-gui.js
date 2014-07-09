@@ -65,10 +65,10 @@ var TicTacToeGui = function () { //module returning constructor:
             for(var row = 0; row < 3; row++){
                 var cell = document.getElementById('grid' + this.gameNumber + 'x' + row + 'y' + col);
                 cell.addEventListener('mouseenter', function(){
-                    //this.textContent = getState();
+                    this.textContent = getState();
                 });
                 cell.addEventListener('mouseleave', function(){
-                    //this.textContent = null;
+                    this.textContent = "";
                 });
 
             }
@@ -78,12 +78,12 @@ var TicTacToeGui = function () { //module returning constructor:
             return(this.callback);
         }
 
-        this.getState = function(){
+        getState = function(){
             return gameState;
         }
 
         this.setState = function(newState){
-            
+
             gameState = newState;
 
             switch (newState)
