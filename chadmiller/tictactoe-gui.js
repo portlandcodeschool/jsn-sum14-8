@@ -6,7 +6,7 @@ var TicTacToeGui = function() {
     for (var i = 0; i < winner.length; i++) {
       var id = 'grid' + boardId + 'x' + winner[i].x + 'y' + winner[i].y;
       var td = document.getElementById(id);
-      td.style.color = 'yellow';
+      td.classList.add('winner');
     }
   }
 

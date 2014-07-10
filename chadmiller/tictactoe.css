@@ -1,11 +1,29 @@
-#tictactoe tr {
-  height: 50px;
+body {
+  font-family: helvetica;
+}
+
+#tictactoe table {
+  border-spacing: 0;
 }
 
 #tictactoe td {
-  background: #333;
+  border-left: 2px solid black;
+  border-bottom: 2px solid black;
   width: 50px;
-  color: white;
-  font-size: 40px;
+  height: 50px;
+  font-size: 35px;
   text-align: center;
+}
+
+#tictactoe tr td:first-child {
+  border-left: none;
+}
+
+#tictactoe tr:last-child td {
+  border-bottom: none;
+}
+
+#tictactoe td.winner {
+  background: green;
+  color: white;
 }
