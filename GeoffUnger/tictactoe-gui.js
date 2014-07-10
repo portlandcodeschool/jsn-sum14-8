@@ -23,6 +23,7 @@ var TicTacToeGui = function () { //module returning constructor:
             }
         }
 
+
         this.gameNumber = gameNumber;
 
         gameNumber++;
@@ -37,6 +38,7 @@ var TicTacToeGui = function () { //module returning constructor:
         this.mark = function (xyObj, symbol) {
             var box = document.getElementById('grid' + this.gameNumber + 'x' + xyObj.x + 'y' + xyObj.y);
             box.textContent = symbol;
+            box.classList.add("not-blank");
 
         }
 
@@ -55,8 +57,8 @@ var TicTacToeGui = function () { //module returning constructor:
                             innerCB(innerRow, innerCol);
                             console.log("Removing event listener from: " + innerCell.id);
                             //innerCell.classList.add('green');
-                            innerCell.removeEventListener('mouseenter', addNextMove, false);
-                            innerCell.removeEventListener('mouseleave', removeNextMove, false);
+                            //innerCell.removeEventListener('mouseenter', addNextMove, false);
+                            //innerCell.removeEventListener('mouseleave', removeNextMove, false);
                         }
                     }
 
@@ -71,13 +73,17 @@ var TicTacToeGui = function () { //module returning constructor:
             for(var row = 0; row < 3; row++){
                 var cell = document.getElementById('grid' + this.gameNumber + 'x' + row + 'y' + col);
                 var addNextMove = function(){
+                    if(!this.classList.contains("not-blank")){
                     this.textContent = getState();
+                    }
                 };
                 var removeNextMove = function(){
-                    this.textContent = "";
+                    if(!this.classList.contains("not-blank")){
+                        this.textContent = "";
+                    }
                 }
-                //cell.addEventListener('mouseenter', addNextMove);
-                //cell.addEventListener('mouseleave', removeNextMove);
+                cell.addEventListener('mouseenter', addNextMove);
+                cell.addEventListener('mouseleave', removeNextMove);
 
             }
         }
