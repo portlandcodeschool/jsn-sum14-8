@@ -47,23 +47,16 @@ var TicTacToeGui = function () { //module returning constructor:
                 for (var row = 0; row < 3; row++) {
                     var cell = document.getElementById('grid' + this.gameNumber + 'x' + row + 'y' + col);
 
-                    function callbackMaker(r, c, cb, gn) {
+                    function callbackMaker(r, c, cb) {
                         var innerCB = cb;
                         var innerRow = r;
                         var innerCol = c;
-                        var innerGn = gn;
                         return function () {
-                            var innerCell = document.getElementById('grid' + innerGn + 'x' + innerRow + 'y' + innerCol);
+                            var innerCell = document.getElementById('grid' + this.gameNumber + 'x' + innerRow + 'y' + innerCol);
                             innerCB(innerRow, innerCol);
-                            console.log("Removing event listener from: " + innerCell.id);
-                            //innerCell.classList.add('green');
-                            //innerCell.removeEventListener('mouseenter', addNextMove, false);
-                            //innerCell.removeEventListener('mouseleave', removeNextMove, false);
                         }
                     }
-
-                    cell.addEventListener('click', callbackMaker(row, col, callback, this.gameNumber));
-
+                    cell.addEventListener('click', callbackMaker(row, col, callback));
                 }
 
             }
@@ -100,26 +93,24 @@ var TicTacToeGui = function () { //module returning constructor:
 
             gameState = newState;
 
+            if (!newState){
+                infoArea.textContent = "The game was a draw!";
+                alert("Game was a draw!\n\nRefresh the browser to play again.");
+            }
+
+            if(newState.winner){
+                infoArea.textContent = "We have a winner - " + newState.winner + " won!";
+                alert("Player " + newState.winner + " won!\n\nRefresh the browser to play again.");
+            }
+
             switch (newState)
             {
-
                 case "X":
                     infoArea.textContent = "It's player X's turn.";
                     break;
                 case "O":
                     infoArea.textContent = "It's player O's turn.";
                     break;
-                case null:
-                    infoArea.textContent = "The game was a draw";
-                    alert("Game was a draw!");
-                    break;
-                case "winner-X":
-                    infoArea.textContent = "X won!";
-                    alert("X won!");
-                    break;
-                case "winner-O":
-                    infoArea.textContent = "O won!";
-                    alert("O won!");
             }
         }
 

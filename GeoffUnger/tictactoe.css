@@ -1,20 +1,25 @@
 td {
-  height: 100px;
-    min-width: 100px;
+    height: 100px;
+    width: 100px;
     empty-cells: show;
     border: 1px black solid;
     font-family: arial, sans-serif;
     font-weight: bold;
-    font-size: 90px;
+    font-size: 80px;
     text-align: center;
+    color: lightgray;
 }
 
 p {
     font-family: arial, sans-serif;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .green {
     background-color: lightgreen;
+}
+
+.not-blank{
+    color:black;
 }

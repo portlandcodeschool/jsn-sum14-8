@@ -139,14 +139,7 @@ var TicTacToeGame = function () { //module returning constructor:
                     }
 
                     (item == size) ? result.winner = "X" : result.winner = "O";
-                    switch (result.winner) {
-                        case "X":
-                            gui.setState("winner-X");
-                            break;
-                        case "O":
-                            gui.setState("winner-O");
-                            break;
-                    }
+                    gui.setState(result);
 
 
                     callBack("The winner was " + result.winner + "!");
