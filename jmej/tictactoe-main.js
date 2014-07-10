@@ -40,6 +40,7 @@ var TicTacToeGui = function() { //module returning constructor and initializing 
                 td = document.createElement('td');
                 td.setAttribute('id',this.guiId+xyToId(col,row));
                 this.prepareForClicks(td,col,row);
+                this.prepareForMouseover(td);
                 tr.appendChild(td);
          }
        }
@@ -74,6 +75,32 @@ var TicTacToeGui = function() { //module returning constructor and initializing 
         console.log('You clicked on gui '+this.guiId+' x:'+x+' , y: '+y);
         this.game.takeTurn(x,y);
     }
+    this.getState = function(){
+        return this.game.turn;
+    }
+    //this.setState(this.getState()){
+        
+        
+   // }
+    this.showState = function(elem, state){
+        var stateSym = {X:'x', O:'o'};
+        var objRef = this; 
+        if (elem.innerHTML == '')
+           elem.innerHTML = stateSym[this.getState()];
+        
+    }
+    this.prepareForMouseover = function(elem){
+         var objRef = this;               
+         elem.addEventListener("mouseenter", function(){
+             objRef.showState(elem);
+         });
+         elem.addEventListener("mouseleave", function(){
+            if (elem.innerHTML == 'x')
+             elem.innerHTML = '';
+             else if (elem.innerHTML == 'o')
+                 elem.innerHTML = '';
+         });  
+    }       
   }
 
 
@@ -88,12 +115,13 @@ var TicTacToeGame = function(endgameCallback, gui){ //module returning game mode
 function TicTacToeBoard(callback,gui){
     var squares = ["*", "*", "*", "*", "*", "*", "*", "*", "*"];
     var address = ["00", "01", "02", "10", "11", "12", "20", "21", "22"];
-    var turn = 'X';
     gui.makeboard();
     gui.game = this; //gives the gui a property pointing to the correct game instance
     this.xytoxyObj = function(x,y) { //takes x and y, returning xyObj that looks like {x:0, y:0}
        return {x:+x,y:+y};
     }
+    this.turn = 'X';
+    
     this.move = function(x, y, player){
         var newMove = String(x)+String(y);
         var square = address.indexOf(newMove);
@@ -104,10 +132,10 @@ function TicTacToeBoard(callback,gui){
         else{
             squares[square] = player;
             gui.mark(this.xytoxyObj(x, y), player);
-            if (turn == 'X'){
-              turn = 'O'
+            if (this.turn == 'X'){
+              this.turn = 'O';
             }
-            else turn = 'X';
+            else this.turn = 'X';
             console.log("nice move "+player);
             this.show();
             this.win();
@@ -144,23 +172,24 @@ function TicTacToeBoard(callback,gui){
     }
     this.clear = function(){
         squares = ["*", "*", "*", "*", "*", "*", "*", "*", "*"];
-        turn = 'X';
+        this.turn = 'X';
         this.show();
         gui.clearall(); 
     }
     this.whoseTurn = function(){// returns either 'X' or 'O'
-        return turn;
+        return this.turn;
     }
     this.takeTurn = function(x,y){ // calls either placeX(x,y) or placeO(x,y), depending on whoseTurn().
-      this.move(x,y,turn);
+      this.move(x,y,this.turn);
     }
 };
 return TicTacToeBoard;
 }();
 
 var gui = new TicTacToeGui();
-var gui2 = new TicTacToeGui();
+//var gui2 = new TicTacToeGui();
 var game1 = new TicTacToeGame(gameOverMsg, gui);
-var game2 = new TicTacToeGame(gameOverMsg, gui2);
+//var game2 = new TicTacToeGame(gameOverMsg, gui2);
 //game1.takeTurn(0,2);
 //game2.takeTurn(0,0);
+
